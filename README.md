@@ -40,6 +40,10 @@ git pull
 
 ```
 
+## Pictures
+
+![1](https://i.imgur.com/sJOXKWD.png)
+
 ## Todo
 
 - [ ] add account error checking 
