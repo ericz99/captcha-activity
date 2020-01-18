@@ -40,6 +40,10 @@ git pull
 
 ```
 
+## Todo
+
+- [ ] add account error checking 
+
 ## Note
 
 - stopTime in the config, is when you would like the script to stop. Please indicate how many minute, for example, 5 == 5 minute, 10 == 10 minute, 120 == 120 minute and etc...
