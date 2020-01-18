@@ -1,0 +1,17 @@
+{
+  "name": "captcha-activity",
+  "version": "1.0.0",
+  "description": "Easy one click on captcha, this script will simulate human actions using puppeteer.",
+  "main": "index.js",
+  "repository": "https://github.com/ericz99/captcha-activity.git",
+  "author": "Eric Zhang",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "figlet": "^1.2.4",
+    "inquirer": "^7.0.3",
+    "puppeteer": "^2.0.0",
+    "puppeteer-extra": "^3.1.9",
+    "puppeteer-extra-plugin-stealth": "^2.4.9"
+  }
+}

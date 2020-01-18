@@ -1,0 +1,14 @@
+[
+    {
+        "email": "test123@gmail.com",
+        "password": "test123",
+        "proxy": "localhost",
+        "stopTime": 5
+    },
+    {
+        "email": "test123@gmail.com",
+        "password": "test123",
+        "proxy": "localhost",
+        "stopTime": 5
+    }
+]
