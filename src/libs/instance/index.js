@@ -64,7 +64,7 @@ class Instance {
 
         // # spawn browser
         this.browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             args,
             ignoreHTTPSErrors: true,
             devtools: false
