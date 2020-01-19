@@ -24,9 +24,13 @@ class Instance {
             "what is youtube",
             "code python",
             "youtube channel",
-            "how big is a python",
+            "what is javascript",
             "python definition",
-            "hello world"];
+            "hello world",
+            "bigfoot",
+            "marvel",
+            "superman",
+            "avenger"];
 
         // ## DEFAULT URL ##
         this.defaultUrl = "https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin";
@@ -60,16 +64,20 @@ class Instance {
 
         // # spawn browser
         this.browser = await puppeteer.launch({
-            headless: true,
+            headless: false,
             args,
             ignoreHTTPSErrors: true,
             devtools: false
         });
 
-        // Create main page
+        // # Create main page
         this.page = await this.browser.newPage();
-        // Close first empty page
+        // # Close first empty page
         (await this.browser.pages())[0].close();
+        // # set view port
+        await this.page.setViewport({ width: 0, height: 0 })
+        // # set global timeout 0 unlimited
+        await this.page.setDefaultNavigationTimeout(0);
         // # go to page
         this.page.goto(this.defaultUrl, { waitUntil: 'networkidle2' });
         // # wait for navigation to process
@@ -102,7 +110,7 @@ class Instance {
     async waitForNavigation() {
         const [resp] = await Promise.all([
             this.page.waitForNavigation({
-                timeout: 30000,
+                timeout: 0,
                 waitUntil: ['networkidle2', 'load', 'domcontentloaded']
             })
         ]);
@@ -130,24 +138,32 @@ class Instance {
             return;
         }
 
-        this.page.goto("https://www.google.com/", { waitUntil: 'networkidle2', timeout: 0 });
-        const any = this.wordBank[Math.floor(Math.random() * this.wordBank.length)];
-        await this.waitForNavigation();
-        await this.page.type('input.gLFyf.gsfi', any, { delay: 150 });
-        this.page.keyboard.press('Enter');
-        await this.waitForNavigation();
-        await this.page.waitForSelector('h3.LC20lb', { timeout: 30000 });
-        await this.page.evaluate(() => {
-            let elements = document.querySelectorAll('h3.LC20lb')
-            // "for loop" will click all element not random
-            let randomIndex = Math.floor(Math.random() * elements.length) + 1
-            elements[randomIndex].click();
-        });
+        try {
+            this.page.goto("https://www.google.com/", { waitUntil: 'networkidle2', timeout: 0 });
+            const any = this.wordBank[Math.floor(Math.random() * this.wordBank.length)];
+            await this.waitForNavigation();
+            await this.page.waitForSelector('input.gLFyf.gsfi', { timeout: 30000 });
+            await this.page.type('input.gLFyf.gsfi', any, { delay: 150 });
+            this.page.keyboard.press('Enter');
+            await this.waitForNavigation();
+            await this.page.waitForSelector('h3.LC20lb', { timeout: 30000 });
+            await this.page.evaluate(() => {
+                let elements = document.querySelectorAll('h3.LC20lb')
+                // "for loop" will click all element not random
+                let randomIndex = Math.floor(Math.random() * elements.length);
+                elements[randomIndex].click();
+            });
 
-        await this.waitForNavigation();
-        const isDone = await this.page.evaluate(this.autoScroll);
-        await this.sleep(3000);
-        await this.startActivity();
+            await this.waitForNavigation();
+            const isDone = await this.page.evaluate(this.autoScroll);
+            await this.sleep(3000);
+            await this.startActivity();
+        } catch (e) {
+            if (e) {
+                this.logger.red(e);
+                process.exit(1);
+            }
+        }
     }
 
     async autoScroll() {
